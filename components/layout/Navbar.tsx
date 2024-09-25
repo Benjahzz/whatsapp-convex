@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useState } from "react";
 import useScreenStore from "@/store/useScreen";
 
 const navLinks = [
@@ -47,6 +46,7 @@ const Navbar = () => {
           className="flex items-center justify-center"
           variant={"linkIcon"}
           size={"linkIcon"}
+          onClick={() => setStep("settings")}
         >
           <Settings />
         </Button>

@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 type State = {
-    step: "chat" | "states" | "channels" | "community" | "profile";
+    step: "chat" | "states" | "channels" | "community" | "profile" | "settings";
 }
 
 type Action = {

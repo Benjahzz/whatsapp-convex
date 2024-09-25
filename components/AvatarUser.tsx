@@ -1,6 +1,5 @@
 import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { useCurrentUser } from "@/features/auth/api/use-current-user";
 
 interface AvatarUserProps extends React.HTMLAttributes<HTMLDivElement> {
   imageSrc?: string;

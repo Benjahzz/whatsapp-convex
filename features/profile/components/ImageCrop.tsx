@@ -10,18 +10,16 @@ interface ImageCropProps {
   imageSrc: string;
   open: boolean;
   setOpen: (open: boolean) => void;
-  onConfirm?: () => void;
+  onConfirm: (image: File) => void;
 }
 
-const ImageCrop: React.FC<ImageCropProps> = ({ imageSrc, open, setOpen }) => {
+const ImageCrop: React.FC<ImageCropProps> = ({ imageSrc, open, setOpen,onConfirm }) => {
 
-  const { mutate } = useUpdateUser();
 
-  const generateUploadUrl = useMutation(api.users.generateUploadUrl);
 
   const editorRef = useRef<AvatarEditor>(null);
 
-  const onConfirm = async () => {
+  const onConfirmImage = async () => {
     if (editorRef.current) {
       const dataUrl = editorRef.current.getImageScaledToCanvas().toDataURL();
       const result = await fetch(dataUrl);
@@ -31,17 +29,9 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imageSrc, open, setOpen }) => {
         type: "image/png",
       });
 
-      const postUrl = await generateUploadUrl();
-
-      const uploadResult = await fetch(postUrl, {
-        method: "POST",
-        headers: { "Content-Type": selectedImage!.type },
-        body: selectedImage,
-      });
-      const { storageId } = await uploadResult.json();
-
-      await mutate({ image: storageId });
-      setOpen(false);
+      onConfirm(selectedImage);
+      
+      
     }
   };
 
@@ -59,7 +49,7 @@ const ImageCrop: React.FC<ImageCropProps> = ({ imageSrc, open, setOpen }) => {
           rotate={0}
           ref={editorRef}
         />
-        <Button className="mt-4" onClick={onConfirm}>
+        <Button className="mt-4" onClick={onConfirmImage}>
           Guardar
         </Button>
       </DialogContent>
